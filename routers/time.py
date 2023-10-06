@@ -13,20 +13,24 @@ def get_db():
         yield db
     finally:
         db.close()
-
+        
+#index de tiempos
 @time_router.get('/times',tags=['times'],response_model=List[schemas.Time])
 def get_times(db:SessionLocal=Depends(get_db)):
     times=db.query(TimeModel).all()
     return times
 
+#tiempo detail
 @time_router.get('/times/{id}',tags=['times'])
 def show_times(db:SessionLocal=Depends(get_db),id:int=None):
     times=db.query(TimeModel).filter(TimeModel.id==id).first()
     return times
 
+#guardar tiempo
 @time_router.post('/times/',status_code=201,tags=['times'])
 def create_times(time:schemas.Time,db:SessionLocal=Depends(get_db)):
     times=db.query(TimeModel).count()
+    #validar de que solo exista un tiempo almacenado
     if times >=1:
       return JSONResponse(status_code=404,content={'message':"ya existe un time registrado"}) 
     new_time=TimeModel(**time.model_dump()) 
@@ -34,6 +38,7 @@ def create_times(time:schemas.Time,db:SessionLocal=Depends(get_db)):
     db.commit()
     return "time create"
 
+#editar tiempo
 @time_router.put('/times/{id}',status_code=200,tags=['times'])
 def update_times(time:schemas.Time,db:SessionLocal=Depends(get_db),id:int=None):
     timeup=db.query(TimeModel).filter(TimeModel.id==id).first()
@@ -43,6 +48,8 @@ def update_times(time:schemas.Time,db:SessionLocal=Depends(get_db),id:int=None):
     db.commit()
     return JSONResponse(status_code=200,content={'message':"time actualizado"})  
 
+
+#borrar tiempo
 @time_router.delete('/times/{id}',tags=['times'])
 def delete_times(db:SessionLocal=Depends(get_db),id:int=None):
     times=db.query(TimeModel).filter(TimeModel.id==id).first()
