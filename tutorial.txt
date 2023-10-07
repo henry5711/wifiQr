@@ -2,7 +2,7 @@ paso 1 crear ambiente virtual
 py -m venv env
 
 paso 2 activar ambiente virutal
-.\env\Scripts\activate
+.\venv\Scripts\activate
 
 paso 3 instalar fastapi
 pip install fastapi
