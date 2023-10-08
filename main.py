@@ -6,6 +6,7 @@ import models,schemas
 from jwt_manager import create_token,validate_token
 from fastapi.security import HTTPAuthorizationCredentials, HTTPBearer
 from routers.time import time_router
+from routers.conect import conect_router
 from starlette.responses import RedirectResponse
 
 models.Base.metadata.create_all(bind=engine)
@@ -25,3 +26,4 @@ def get_db():
 def main():
     return RedirectResponse(url="/docs/")   
 app.include_router(time_router)
+app.include_router(conect_router)
