@@ -16,7 +16,7 @@ def get_db():
 
 
 #index de tiempos
-@conect_router.get('/conection',tags=['conection'],response_model=List[schemas.Time])
+@conect_router.get('/conection',tags=['conection'],response_model=List[schemas.Conection])
 def get_conection(db:SessionLocal=Depends(get_db)):
     conection=db.query(ConectionModel).all()
     return conection
@@ -29,25 +29,25 @@ def show_conection(db:SessionLocal=Depends(get_db),id:int=None):
 
 #guardar tiempo
 @conect_router.post('/conection/',status_code=201,tags=['conection'])
-def create_conection(time:schemas.Time,db:SessionLocal=Depends(get_db)):
+def create_conection(Conection:schemas.Conection,db:SessionLocal=Depends(get_db)):
     conection=db.query(ConectionModel).count()
     #validar de que solo exista un tiempo almacenado
     if conection >=1:
-      return JSONResponse(status_code=404,content={'message':"ya existe un time registrado"}) 
-    new_time=ConectionModel(**time.model_dump()) 
-    db.add(new_time)
+      return JSONResponse(status_code=404,content={'message':"ya existe un Conection registrado"}) 
+    new_Conection=ConectionModel(**Conection.model_dump()) 
+    db.add(new_Conection)
     db.commit()
-    return "time create"
+    return "Conection create"
 
 #editar tiempo
 @conect_router.put('/conection/{id}',status_code=200,tags=['conection'])
-def update_conection(time:schemas.Time,db:SessionLocal=Depends(get_db),id:int=None):
-    timeup=db.query(ConectionModel).filter(ConectionModel.id==id).first()
-    if not timeup:
-        return JSONResponse(status_code=404,content={'message':"time no encontrado"})  
-    timeup.time=time.time
+def update_conection(Conection:schemas.Conection,db:SessionLocal=Depends(get_db),id:int=None):
+    Conectionup=db.query(ConectionModel).filter(ConectionModel.id==id).first()
+    if not Conectionup:
+        return JSONResponse(status_code=404,content={'message':"Conection no encontrado"})  
+    Conectionup.Conection=Conection.Conection
     db.commit()
-    return JSONResponse(status_code=200,content={'message':"time actualizado"})  
+    return JSONResponse(status_code=200,content={'message':"Conection actualizado"})  
 
 
 #borrar tiempo
@@ -55,7 +55,7 @@ def update_conection(time:schemas.Time,db:SessionLocal=Depends(get_db),id:int=No
 def delete_conection(db:SessionLocal=Depends(get_db),id:int=None):
     conection=db.query(ConectionModel).filter(ConectionModel.id==id).first()
     if not conection:
-        return JSONResponse(status_code=404,content={'message':"time no encontrado"})
+        return JSONResponse(status_code=404,content={'message':"Conection no encontrado"})
     db.delete(conection) 
     db.commit() 
-    return JSONResponse(status_code=200,content={'message':"time delete"}) 
+    return JSONResponse(status_code=200,content={'message':"Conection delete"}) 

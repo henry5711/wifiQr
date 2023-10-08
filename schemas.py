@@ -14,4 +14,10 @@ class Time(BaseModel):
     time:time
     init:Optional[datetime]
 
+
+class Conection(BaseModel):
+    ip:str
+    mac:str
+    time_id:int
+    is_active :Optional[bool] 
    
