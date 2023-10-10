@@ -10,14 +10,15 @@ class User(BaseModel):
     estado:int
 
 class Time(BaseModel):
-    #id:Optional[int]
+    id:Optional[int]
     time:time
     init:Optional[datetime]
 
 
 class Conection(BaseModel):
+    id:Optional[int]
     ip:str
     mac:str
     time_id:int
     is_active :Optional[bool] 
-   
+    fec_conection:Optional[datetime]

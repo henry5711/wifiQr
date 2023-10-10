@@ -24,7 +24,7 @@ class Conection(Base):
     mac=Column(String(255),nullable=True)
     time_id=Column(ForeignKey("Time.id"))
     is_active = Column(Boolean, default=True)
-    fec_conection=Column(DateTime)
+    fec_conection=Column(DateTime,server_default=func.now())
     
 
    
