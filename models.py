@@ -13,7 +13,7 @@ class User(Base):
 class Time(Base):
     __tablename__ = 'Time'
     id = Column(Integer,primary_key=True,index=True)
-    time=Column(Time)
+    time=Column(Integer)
     init=Column(DateTime,server_default=func.now())
     
 

@@ -11,7 +11,7 @@ class User(BaseModel):
 
 class Time(BaseModel):
     id:Optional[int]
-    time:time
+    time:int
     init:Optional[datetime]
 
 
