@@ -29,10 +29,6 @@ def show_times(db:SessionLocal=Depends(get_db),id:int=None):
 #guardar tiempo
 @time_router.post('/times/',status_code=201,tags=['times'])
 def create_times(time:schemas.Time,db:SessionLocal=Depends(get_db)):
-    times=db.query(TimeModel).count()
-    #validar de que solo exista un tiempo almacenado
-    if times >=1:
-      return JSONResponse(status_code=404,content={'message':"ya existe un time registrado"}) 
     new_time=TimeModel(**time.model_dump()) 
     db.add(new_time)
     db.commit()

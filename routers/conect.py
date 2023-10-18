@@ -59,3 +59,14 @@ def delete_conection(db:SessionLocal=Depends(get_db),id:int=None):
     db.delete(conection) 
     db.commit() 
     return JSONResponse(status_code=200,content={'message':"Conection delete"}) 
+
+
+#desconectar tiempo
+@conect_router.put('/conection/desactive/{id}',status_code=200,tags=['conection'])
+def desactive_conection(db:SessionLocal=Depends(get_db),id:int=None):
+    Conectionup=db.query(ConectionModel).filter(ConectionModel.id==id).first()
+    if not Conectionup:
+        return JSONResponse(status_code=404,content={'message':"Conection no encontrado"})  
+    Conectionup.is_active=False
+    db.commit()
+    return JSONResponse(status_code=200,content={'message':"Conection actualizado"})
