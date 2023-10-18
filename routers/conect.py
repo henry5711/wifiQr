@@ -31,9 +31,6 @@ def show_conection(db:SessionLocal=Depends(get_db),id:int=None):
 @conect_router.post('/conection/',status_code=201,tags=['conection'])
 def create_conection(Conection:schemas.Conection,db:SessionLocal=Depends(get_db)):
     conection=db.query(ConectionModel).count()
-    #validar de que solo exista un tiempo almacenado
-    if conection >=1:
-      return JSONResponse(status_code=404,content={'message':"ya existe un Conection registrado"}) 
     new_Conection=ConectionModel(**Conection.model_dump()) 
     db.add(new_Conection)
     db.commit()
