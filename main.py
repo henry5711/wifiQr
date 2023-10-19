@@ -8,6 +8,7 @@ from fastapi.security import HTTPAuthorizationCredentials, HTTPBearer
 from routers.time import time_router
 from routers.conect import conect_router
 from starlette.responses import RedirectResponse
+from fastapi.middleware.cors import CORSMiddleware
 
 models.Base.metadata.create_all(bind=engine)
 
@@ -15,6 +16,17 @@ app = FastAPI(
     title= 'Qr wifi API example',
     description= 'Una API Para el manejo de una red wifi mediante qr',
     version= '0.0.1',)
+
+
+
+# Configurar el middleware CORS
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["http://localhost:8081"],
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
 
 def get_db():
     try:
