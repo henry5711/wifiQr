@@ -17,8 +17,8 @@ class Time(BaseModel):
 
 class Conection(BaseModel):
     id:Optional[int]
-    ip:str
-    mac:str
+    ip:Optional[str]
+    mac:Optional[str]
     time_id:int
     is_active :Optional[bool] 
     fec_conection:Optional[datetime]
